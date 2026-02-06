@@ -3,218 +3,809 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Yomi的个人网站 主站</title>
+    <title>MTR-Yomi的实用拓展</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
-        /* 确保html和body的高度为100%，并且不显示滚动条 */
-        html, body {
-            height: 100%;
+        :root {
+            --primary: #004d40;
+            --primary-dark: #00251a;
+            --primary-light: #39796b;
+            --secondary: #00695c;
+            --secondary-light: #439889;
+            --accent: #00796b;
+            --accent-light: #48a999;
+            --text-primary: #263238;
+            --text-secondary: #546e7a;
+            --divider: #e0e0e0;
+            --background: #f5f7fa;
+            --surface: #ffffff;
+            --success: #2e7d32;
+            --warning: #f57c00;
+            --info: #0288d1;
+            --error: #d32f2f;
+        }
+        
+        * {
             margin: 0;
             padding: 0;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            transition: background-color 0.3s ease; /* 添加过渡效果 */
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', '微软雅黑', sans-serif;
         }
-
-        /* 默认的背景颜色和字体颜色 */
+        
         body {
-            background-color: #f0f0f0;
-            color: #333;
+            background-color: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
+            font-weight: 400;
         }
-
-        /* 深色模式的样式 */
-        body.dark-mode {
-            background-color: #333;
-            color: #f0f0f0;
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
         }
-
-        /* Header样式 */
-        header {
-            background-color: #6CE9E2;
+        
+        /* Material Design 顶部应用栏 */
+        .app-bar {
+            background-color: rgba(0, 77, 64, 0.85);
             color: white;
-            padding: 20px;
-            text-align: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            padding: 16px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
         }
-
-        h1 {
-            margin: 0;
-        }
-
-        /* 还是三栏布局 */
-        .content {
+        
+        .app-bar-content {
             display: flex;
-            justify-content: space-between;
-            gap: 20px;
-            padding: 20px;
-            flex: 1;
-            min-height: 0;
-            overflow: hidden;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
         }
-
-        /* 每一栏的样式 */
-        .content > div {
-            background-color: #ffffff;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            flex: 1;
+        
+        .app-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+        
+        .app-title i {
+            font-size: 2rem;
+            color: var(--accent-light);
+        }
+        
+        .logo-text {
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
-            align-items: flex-start;
-            transition: all 0.3s ease-in-out;
         }
-
-        .content > div:hover {
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+        
+        .logo-subtitle {
+            font-size: 0.8rem;
+            font-weight: 300;
+            opacity: 0.8;
         }
-
-        .content > div h2 {
-            margin-top: 0;
+        
+        .spacer {
+            flex-grow: 1;
         }
-
-        /* 按钮的样式 */
-        .jump-button {
-            display: inline-block;
-            margin-top: auto;
-            background-color: #5CE6DE;
-            color: white;
-            padding: 10px 20px;
+        
+        .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+        
+        .nav-link {
+            color: rgba(255,255,255,0.9);
             text-decoration: none;
-            border-radius: 10px;
-            font-size: 16px;
-            transition: background-color 0.3s;
-            text-align: center;
+            font-weight: 400;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
         }
-
-        .download-button:hover {
-            background-color: #5CE6DE;
-        }
-
-        /* 底部的样式 */
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px;
+        
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
             width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .nav-link:hover {
+            background-color: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+        
+        .nav-link:hover::before {
+            left: 100%;
+        }
+        
+        .main {
+            background: linear-gradient(rgba(0, 37, 26, 0.85), rgba(0, 37, 26, 0.9)), 
+                        url('https://gp3e.saobby.com/i/xlnUreQm81bkCQGf.png');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .main::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 105, 92, 0.2) 0%, rgba(0, 121, 107, 0.2) 100%);
+            z-index: 1;
+        }
+        
+        .main-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .main-subtitle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+            opacity: 0.95;
+        }
+        
+        .highlight {
+            color: var(--accent-light);
+            font-weight: 400;
+        }
+        
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        /* Material Design 按钮 - 适当圆角 */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 14px 28px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn i {
+            margin-right: 10px;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 15px rgba(0, 121, 107, 0.4);
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: white;
+            border: 2px solid rgba(255,255,255,0.7);
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(255,255,255,0.15);
+            border-color: white;
+            transform: translateY(-3px) scale(1.05);
+        }
+        
+        .btn-outline:hover::before {
+            left: 100%;
+        }
+        
+        /* Material Design 卡片 - 适当圆角 */
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-alt {
+            background-color: var(--divider);
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 500;
+            margin-bottom: 48px;
+            text-align: center;
+            color: var(--primary);
             position: relative;
         }
-
-        /* 响应式布局：当屏幕宽度小于900px时，调整为垂直排列 */
-        @media (max-width: 900px) {
-            .content {
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary-light), var(--secondary));
+            border-radius: 0;
+        }
+        
+        .section-subtitle {
+            font-size: 1.3rem;
+            font-weight: 300;
+            color: var(--text-secondary);
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 48px;
+        }
+        
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+        
+        .card {
+            background-color: var(--surface);
+            border-radius: 4px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 3px solid var(--primary-light);
+            backdrop-filter: blur(5px);
+        }
+        
+        .card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 28px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .card-icon {
+            background-color: rgba(255,255,255,0.2);
+            width: 56px;
+            height: 56px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+        
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 500;
+        }
+        
+        .card-content {
+            padding: 28px;
+        }
+        
+        .card-text {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        .feature-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+        
+        .feature-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--divider);
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .feature-list i {
+            color: var(--accent);
+            margin-right: 10px;
+        }
+        
+        /* 功能展示区域 - 适当圆角 */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .feature-item {
+            background-color: var(--surface);
+            border-radius: 4px;
+            padding: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--info);
+            transition: transform 0.3s;
+            backdrop-filter: blur(5px);
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-5px) scale(1.02);
+        }
+        
+        .feature-item.upcoming {
+            border-left-color: var(--warning);
+            opacity: 0.9;
+        }
+        
+        .feature-title {
+            font-weight: 500;
+            margin-bottom: 12px;
+            color: var(--primary);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-left: auto;
+        }
+        
+        .badge-current {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .badge-upcoming {
+            background-color: var(--warning);
+            color: white;
+        }
+        
+        .badge-future {
+            background-color: var(--info);
+            color: white;
+        }
+        
+        /* 截图区域 - 适当圆角 */
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .screenshot-container {
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .screenshot-container:hover {
+            transform: translateY(-5px) scale(1.02);
+        }
+        
+        .screenshot {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+            background-color: #e0e7ff;
+        }
+        
+        .caption {
+            padding: 15px;
+            background-color: var(--surface);
+            font-weight: 400;
+            color: var(--text-primary);
+            text-align: center;
+        }
+        
+        /* 下载区域 - 适当圆角 */
+        .download-section {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .version-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: white;
+            padding: 8px 24px;
+            border-radius: 4px;
+            font-weight: 500;
+            margin: 20px 0;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 8px rgba(0, 121, 107, 0.3);
+        }
+        
+        .qq-group {
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            padding: 25px;
+            max-width: 500px;
+            margin: 40px auto 0;
+            backdrop-filter: blur(10px);
+        }
+        
+        .qq-group h3 {
+            color: var(--accent-light);
+            margin-bottom: 15px;
+        }
+        
+        .qq-code {
+            font-size: 2.5rem;
+            font-weight: 500;
+            color: white;
+            background: rgba(0,0,0,0.2);
+            padding: 15px 30px;
+            border-radius: 4px;
+            display: inline-block;
+            margin: 15px 0;
+            letter-spacing: 2px;
+        }
+        
+        /* 页脚 */
+        .footer {
+            background-color: var(--primary-dark);
+            padding: 50px 0;
+            text-align: center;
+            color: rgba(255,255,255,0.8);
+        }
+        
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .footer-link {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 300;
+        }
+        
+        .footer-link:hover {
+            color: var(--accent-light);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .app-title {
+                font-size: 1.2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .main-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .btn-group {
                 flex-direction: column;
                 align-items: center;
-                height: auto;
             }
-            .content > div {
-                width: 80%;
-                margin-bottom: 20px;
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+            
+            .section {
+                padding: 60px 0;
+            }
+            
+            .section-title {
+                font-size: 2rem;
             }
         }
-
-        /* 深色模式的颜色调整 */
-        body.dark-mode header {
-            background-color: #25D4D1;
-        }
-
-        body.dark-mode .content > div {
-            background-color: #5D5D5D;
-            color: #f0f0f0;
-        }
-
-        body.dark-mode footer {
-            background-color: #222;
-        }
-
-        /* 深色模式按钮样式 */
-        .dark-mode-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: #6ED3EA;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            z-index: 1000;
-            transition: all 0.3s ease; /* 按钮的过渡动画 */
-        }
-
-        /* 按钮的悬停动画 */
-        .dark-mode-toggle:hover {
-            background-color: #67DAE185;
-            transform: scale(1.1); /* 鼠标悬停时略微放大 */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* 鼠标悬停时增加阴影 */
-        }
-
-        /* 访问量 */
-        .visit {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            font-size: 24px;
-            font-weight: bold;
-            color: #ffffff;
-            z-index: 1000;
-        }
-
     </style>
 </head>
 <body>
-
-    <div class="visit" id="visit"></div>
-    <header>
-        <h1>Yomi的个人网站</h1>
-        <p>主站</p>
+    <header class="app-bar">
+        <div class="app-bar-content">
+            <div class="app-title">
+                <i class="fas fa-subway"></i>
+                <div class="logo-text">
+                    <span>Yomi的MTR实用拓展</span>
+                    <span class="logo-subtitle">适用于MTR3</span>
+                </div>
+            </div>
+            <div class="spacer"></div>
+            <div class="nav-links">
+                <a href="#features" class="nav-link">目前内容</a>
+                <a href="#upcoming" class="nav-link">新内容</a>
+                <a href="#screenshots" class="nav-link">展示</a>
+                <a href="#download" class="nav-link">下载安装</a>
+            </div>
+        </div>
     </header>
-
     
-    <div class="content">
-        <div>
-            <h2>我的世界联机</h2>
-            <p>我的世界相关分站。</p>
-            <a href="yomi-china.github.io/mcplay" class="jump-button" download>看一看</a>
+    <section class="main">
+        <div class="main-content">
+            <h1 class="main-title">Yomi的MTR实用拓展</h1>
+            <p class="main-subtitle">🚇🚇 <span class="highlight"></span>全新附属模组，适用于MTR3</p>
+            <p class="main-subtitle">让MTR的电梯更加避震</p>
+            <div class="btn-group">
+                <a href="https://modrinth.com/mod/mtr-yum" class="btn btn-primary">
+                    <i class="material-icons">download</i>立即下载
+                </a>
+                <a href="https://github.com/yomi-china/MTR-Yomi-Utility-Mod" target="_blank" class="btn btn-outline">
+                    <i class="fab fa-github"></i>GitHub
+                </a>
+            </div>
         </div>
-        <div>
-            <h2>CXG的小站</h2>
-            <p>同学的网站，点击前往。</p>
-            <a href="cxgvincnet1026.github.io" class="jump-button" download>看一看</a>
+    </section>
+    
+    <section class="section" id="features">
+        <div class="container">
+            <h2 class="section-title">目前内容</h2>
+            <p class="section-subtitle">全面提升MTR模组电梯体验</p>
+            
+            <div class="card-container">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-elevator"></i>
+                        </div>
+                        <h3 class="card-title">配置电梯更便捷</h3>
+                    </div>
+                    <div class="card-content">
+                        <p class="card-text">MTR中，通常需要手动连接每个楼层的电梯组件并设置楼层，麻烦且效率低。本模组解决了这个问题。</p>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check-circle"></i> <strong>电梯自动设置器</strong> - 自动设置电梯轨道楼层编号，方便快捷。</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>电梯部件自动连接器</strong> - 一键连接所有电梯按钮，到站灯，显示屏等。</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-volume-up"></i>
+                        </div>
+                        <h3 class="card-title">音效与显示系统</h3>
+                    </div>
+                    <div class="card-content">
+                        <p class="card-text">丰富的音效和显示选项，创造沉浸式铁路体验。</p>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check-circle"></i> <strong>电梯到站灯</strong> - 电梯抵达时闪烁提醒。</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>电梯楼层显示屏</strong> - 美观的楼层显示，支持自定义颜色和样式，多种风格。</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>三菱 GPM/S 风格电梯按钮</strong> - 包含箭头、按钮和数字显示，使用逼真的自定义字体。</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>蒂森克虏伯经典风格电梯按钮</strong> - 包含箭头、按钮和数字显示，使用逼真的自定义字体。</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>电梯到站提示音播放器</strong> - 内置了很多个逼真的提示音，刷右键可以选择并试听。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div>
-            <h2>DEEPSEEK</h2>
-            <p>好用的AI。</p>
-            <a href=https://www.deepseek.com/"" class="jump-button" download>体验体验</a>
-          
-        </div>
-    </div>
+    </section>
 
-    <footer>
-        <p>&copy; 2025 Yomi的个人网站 | 主站</p>
+    <section class="section section-alt" id="upcoming">
+        <div class="container">
+            <h2 class="section-title">新内容</h2>
+            <p class="section-subtitle">更多精彩功能正在火热开发中！</p>
+            
+            <div class="feature-grid">
+                <div class="feature-item upcoming">
+                    <h4 class="feature-title">
+                        <i class="fas fa-palette"></i> 更多外呼样式
+                        <span class="badge badge-upcoming">开发中</span>
+                    </h4>
+                    <p>基于现有外呼面板，新增通力、迅达、奥的斯等多种风格（贴图制作中～）。</p>
+                </div>
+                
+                <div class="feature-item upcoming">
+                    <h4 class="feature-title">
+                        <i class="fas fa-bolt"></i> 简易接触网方块
+                        <span class="badge badge-upcoming">开发中</span>
+                    </h4>
+                    <p>方块化设计，包含直线和弯曲线路两种形式，类似迷上城建模组的道路标线。</p>
+                </div>
+                
+                <div class="feature-item">
+                    <h4 class="feature-title">
+                        <i class="fas fa-tv"></i> 灵动 PIDS 显示屏
+                        <span class="badge badge-future">计划中</span>
+                    </h4>
+                    <p>显示更多信息、支持动画效果和页面切换。</p>
+                </div>
+                
+                <div class="feature-item">
+                    <h4 class="feature-title">
+                        <i class="fas fa-lightbulb"></i> 更多创意功能
+                        <span class="badge badge-future">构思中</span>
+                    </h4>
+                    <p>未来更多精彩功能等你来发现！欢迎加入QQ群提供建议！（群号在下面）</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="screenshots">
+        <div class="container">
+            <h2 class="section-title">效果展示</h2>
+            <p class="section-subtitle">看看YUM模组如何改变您的MTR体验</p>
+            
+            <div class="screenshot-grid">
+                <div class="screenshot-container">
+                    <div class="screenshot" style="background: linear-gradient(135deg, #00695c, #48a999);"></div>
+                    <div class="caption">图片还没拍</div>
+                </div>
+                
+                <div class="screenshot-container">
+                    <div class="screenshot" style="background: linear-gradient(135deg, #004d40, #39796b);"></div>
+                    <div class="caption">图片还没拍</div>
+                </div>
+                
+                <div class="screenshot-container">
+                    <div class="screenshot" style="background: linear-gradient(135deg, #00796b, #439889);"></div>
+                    <div class="caption">图片还没拍</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="download-section" id="download">
+        <div class="container">
+            <h2 style="color: white; font-size: 2.5rem; margin-bottom: 20px; font-weight: 500;">立即体验</h2>
+            <p style="font-size: 1.2rem; opacity: 0.9; margin-bottom: 20px; font-weight: 300;">也可以加入QQ群下载</p>
+            
+            <div class="version-badge">最新版本是1.2.2，CurseForge更新会比Modrinth慢</div>
+            
+            <div class="btn-group">
+                <a href="https://modrinth.com/mod/mtr-yum/versions" class="btn btn-primary" style="background: linear-gradient(135deg, var(--accent-light), var(--accent));">
+                    <i class="material-icons">download</i>Modrinth 下载
+                </a>
+                <a href="https://www.curseforge.com/minecraft/mc-mods/mtr-yomi-utility-mod" target="_blank" class="btn btn-outline">
+                    <i class="fab fa-uncharted"></i>CurseForge 下载（不推荐）
+                </a>
+            </div>
+            
+            <div class="qq-group">
+                <h3><i class="fab fa-qq"></i> 加入QQ群获取最新内测版！</h3>
+                <p>与开发者和其他玩家交流，获取最新测试版本和独家内容！</p>
+                <div class="qq-code">712460389</div>
+                <p>扫描二维码（暂无）或搜索群号加入！</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <h3 style="color: white; margin-bottom: 20px; font-weight: 500;">Yomi的MTR实用拓展</h3>
+                <p style="font-weight: 300;">MTR3的全新附属模组！</p>
+                
+                <div class="footer-links">
+                    <a href="https://github.com/yomi-china/MTR-Yomi-Utility-Mod" class="footer-link" target="_blank">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <a href="https://modrinth.com/mod/mtr-yum" class="footer-link" target="_blank">
+                        <i class="fas fa-cube"></i> Modrinth
+                    </a>
+                    <a href="https://www.curseforge.com/minecraft/mc-mods/mtr-yomi-utility-mod" class="footer-link" target="_blank">
+                        <i class="fab fa-discord"></i> CurseForge
+                    </a>
+                    <a href="https://www.mtrbbs.top/thread-7933-1-1.html" class="footer-link" target="_blank">
+                        <i class="fas fa-users"></i> MTRBBS帖子
+                    </a>
+                </div>
+                
+                <p style="margin-top: 30px; opacity: 0.7; font-weight: 300;">2026 Yomi_307</p>
+            </div>
+        </div>
     </footer>
-
-    <!-- 深色模式切换按钮 -->
-    <button class="dark-mode-toggle" onclick="toggleDarkMode()">切换深浅色模式</button>
-
-    <!-- 引入Markdown解析库 (marked.js) -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
+    
     <script>
-        // 切换深色模式的函数
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode'); // 切换dark-mode类
-        }
-
-        // 使用marked.js库将Markdown内容渲染为HTML
-        document.addEventListener("DOMContentLoaded", function() {
-            const markdownText = '##### 网站访问量： ![](https://saobby.pythonanywhere.com/api/webcounter?id=B0zbyTa5m4BTV7jP)'; // 在这里可以自由编辑Markdown文本
-            const visitElement = document.getElementById('visit');
-            visitElement.innerHTML = marked.parse(markdownText); // 使用marked渲染Markdown
+        // 平滑滚动效果
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // 卡片悬停效果增强
+        const cards = document.querySelectorAll('.card, .feature-item, .screenshot-container');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-8px) scale(1.02)';
+                card.style.boxShadow = '0 10px 25px rgba(0,0,0,0.15)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1)';
+                card.style.boxShadow = '';
+            });
+        });
+        
+        // 动态更新年份
+        document.addEventListener('DOMContentLoaded', function() {
+            const yearElement = document.querySelector('footer p');
+            if (yearElement && yearElement.textContent.includes('2024')) {
+                const currentYear = new Date().getFullYear();
+                yearElement.textContent = yearElement.textContent.replace('2024', currentYear);
+            }
         });
     </script>
-    
 </body>
 </html>
