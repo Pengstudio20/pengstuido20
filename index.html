@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Yomi的个人网站 主站</title>
+    <style>
+        /* 确保html和body的高度为100%，并且不显示滚动条 */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s ease; /* 添加过渡效果 */
+        }
+
+        /* 默认的背景颜色和字体颜色 */
+        body {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        /* 深色模式的样式 */
+        body.dark-mode {
+            background-color: #333;
+            color: #f0f0f0;
+        }
+
+        /* Header样式 */
+        header {
+            background-color: #6CE9E2;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        /* 还是三栏布局 */
+        .content {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 20px;
+            flex: 1;
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        /* 每一栏的样式 */
+        .content > div {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .content > div:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .content > div h2 {
+            margin-top: 0;
+        }
+
+        /* 按钮的样式 */
+        .jump-button {
+            display: inline-block;
+            margin-top: auto;
+            background-color: #5CE6DE;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+
+        .download-button:hover {
+            background-color: #5CE6DE;
+        }
+
+        /* 底部的样式 */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            width: 100%;
+            position: relative;
+        }
+
+        /* 响应式布局：当屏幕宽度小于900px时，调整为垂直排列 */
+        @media (max-width: 900px) {
+            .content {
+                flex-direction: column;
+                align-items: center;
+                height: auto;
+            }
+            .content > div {
+                width: 80%;
+                margin-bottom: 20px;
+            }
+        }
+
+        /* 深色模式的颜色调整 */
+        body.dark-mode header {
+            background-color: #25D4D1;
+        }
+
+        body.dark-mode .content > div {
+            background-color: #5D5D5D;
+            color: #f0f0f0;
+        }
+
+        body.dark-mode footer {
+            background-color: #222;
+        }
+
+        /* 深色模式按钮样式 */
+        .dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #6ED3EA;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease; /* 按钮的过渡动画 */
+        }
+
+        /* 按钮的悬停动画 */
+        .dark-mode-toggle:hover {
+            background-color: #67DAE185;
+            transform: scale(1.1); /* 鼠标悬停时略微放大 */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* 鼠标悬停时增加阴影 */
+        }
+
+        /* 访问量 */
+        .visit {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffffff;
+            z-index: 1000;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="visit" id="visit"></div>
+    <header>
+        <h1>Yomi的个人网站</h1>
+        <p>主站</p>
+    </header>
+
+    
+    <div class="content">
+        <div>
+            <h2>我的世界联机</h2>
+            <p>我的世界相关分站。</p>
+            <a href="yomi-china.github.io/mcplay" class="jump-button" download>看一看</a>
+        </div>
+        <div>
+            <h2>CXG的小站</h2>
+            <p>同学的网站，点击前往。</p>
+            <a href="cxgvincnet1026.github.io" class="jump-button" download>看一看</a>
+        </div>
+        <div>
+            <h2>DEEPSEEK</h2>
+            <p>好用的AI。</p>
+            <a href=https://www.deepseek.com/"" class="jump-button" download>体验体验</a>
+          
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Yomi的个人网站 | 主站</p>
+    </footer>
+
+    <!-- 深色模式切换按钮 -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">切换深浅色模式</button>
+
+    <!-- 引入Markdown解析库 (marked.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <script>
+        // 切换深色模式的函数
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode'); // 切换dark-mode类
+        }
+
+        // 使用marked.js库将Markdown内容渲染为HTML
+        document.addEventListener("DOMContentLoaded", function() {
+            const markdownText = '##### 网站访问量： ![](https://saobby.pythonanywhere.com/api/webcounter?id=B0zbyTa5m4BTV7jP)'; // 在这里可以自由编辑Markdown文本
+            const visitElement = document.getElementById('visit');
+            visitElement.innerHTML = marked.parse(markdownText); // 使用marked渲染Markdown
+        });
+    </script>
+    
+</body>
+</html>
